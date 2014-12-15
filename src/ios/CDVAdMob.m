@@ -33,7 +33,7 @@
 @synthesize bannerIsVisible, bannerIsInitialized;
 @synthesize bannerShow, autoShow, autoShowBanner, autoShowInterstitial;
 
-#define DEFAULT_PUBLISHER_ID    @"ca-app-pub-5679180806221655/5046304686"
+#define DEFAULT_PUBLISHER_ID    @"ca-app-pub-5679180806221655/1710194288"
 
 #define OPT_PUBLISHER_ID    @"publisherId"
 #define OPT_INTERSTITIAL_ADID   @"interstitialAdId"
