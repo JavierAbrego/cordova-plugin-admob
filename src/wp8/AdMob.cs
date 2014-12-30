@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +20,7 @@ namespace Cordova.Extension.Commands
     public class AdMob : BaseCommand
     {
         private AdView bannerAd;
+        private InterstitialAd interstitialAd;
         private AdRequest adRequest;
 
         private AdFormats getAdSize(String size)
@@ -29,6 +30,36 @@ namespace Cordova.Extension.Commands
                 return AdFormats.Banner;
             }
             return AdFormats.SmartBanner;
+        }
+
+        public void createInterstitialView(string args)
+        {
+            interstitialAd = new InterstitialAd("ca-app-pub-5679180806221655/5133703081");
+            AdRequest adRequest = new AdRequest();
+            // Enable test ads.
+            //adRequest.ForceTesting = true;
+
+            interstitialAd.ReceivedAd += OnInterticialAdReceived;
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                interstitialAd.LoadAd(adRequest);
+                this.DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+            });
+
+        }
+
+        private void OnInterticialAdReceived(object sender, AdEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Ad received successfully");
+            interstitialAd.ShowAd();
+        }
+
+        public void setOptions(string args)
+        {
+           /* Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendView("MainPage");
+            });*/
         }
 
         public void showAd(string args)
@@ -76,9 +107,9 @@ namespace Cordova.Extension.Commands
             {
                 inputs = JsonHelper.Deserialize<string[]>(args);
 
-                var publisherId = inputs[0];
-                var size = inputs[1];
-                var bannerAtTop = inputs[2];
+                var publisherId = "ca-app-pub-5679180806221655/3656969887";
+                var size = "30";
+                var bannerAtTop = "false";
 
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
